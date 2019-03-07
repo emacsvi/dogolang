@@ -4,4 +4,8 @@
 - 追踪任务状态。
 - 基于etcd来做。
 
+# 框架图
+
+![框架图](https://github.com/emacsvi/dogolang/blob/master/crontab/1-2-0001.png)
+![模块图](https://github.com/emacsvi/dogolang/blob/master/crontab/1-2-0002.png)
 
