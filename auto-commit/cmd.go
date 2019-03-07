@@ -16,8 +16,7 @@ func autoCommit() (err error) {
 	}
 
 	// commit 所有
-	timeString = time.Now().Format("2006-01-02>15:04:05")
-	fmt.Println(timeString)
+	timeString = time.Now().Format("2006-01-02 15:04:05")
 	if err = execAndPrint("git", "commit", "-a", "-m", timeString); err != nil {
 		return err
 	}
@@ -41,7 +40,7 @@ func execAndPrint(name string, arg ...string) error {
 		fmt.Println(err)
 		return err
 	}
-	fmt.Println("%s\n", string(out))
+	fmt.Println(string(out))
 
 	return err
 }
