@@ -4,22 +4,22 @@ import (
 	"context"
 	"fmt"
 	"go.etcd.io/etcd/clientv3"
-		"time"
+	"time"
 )
 
 func main() {
 
 	var (
-		cfg clientv3.Config
-		cli *clientv3.Client
-		err error
-		kv clientv3.KV
+		cfg    clientv3.Config
+		cli    *clientv3.Client
+		err    error
+		kv     clientv3.KV
 		commOp clientv3.Op
 		opResp clientv3.OpResponse
 	)
 
 	cfg = clientv3.Config{
-		Endpoints:[]string{"127.0.0.1:2379"},
+		Endpoints:   []string{"127.0.0.1:2379"},
 		DialTimeout: 5 * time.Second,
 	}
 

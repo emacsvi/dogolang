@@ -10,22 +10,22 @@ import (
 
 func main() {
 	var (
-		cfg clientv3.Config
-		client *clientv3.Client
-		err error
-		kv clientv3.KV
-		getResp *clientv3.GetResponse
+		cfg                clientv3.Config
+		client             *clientv3.Client
+		err                error
+		kv                 clientv3.KV
+		getResp            *clientv3.GetResponse
 		watchStartRevision int64
-		watch clientv3.Watcher
-		watchRespChan clientv3.WatchChan
-		watchResp clientv3.WatchResponse
-		event *clientv3.Event
-		ctx context.Context
-		cancelFun context.CancelFunc
+		watch              clientv3.Watcher
+		watchRespChan      clientv3.WatchChan
+		watchResp          clientv3.WatchResponse
+		event              *clientv3.Event
+		ctx                context.Context
+		cancelFun          context.CancelFunc
 	)
 
 	cfg = clientv3.Config{
-		Endpoints:[]string{"127.0.0.1:2379"},
+		Endpoints:   []string{"127.0.0.1:2379"},
 		DialTimeout: 5 * time.Second,
 	}
 
@@ -61,7 +61,7 @@ func main() {
 	watch = clientv3.Watcher(client)
 	watchRespChan = watch.Watch(ctx, "/cron/jobs/job7", clientv3.WithRev(watchStartRevision))
 
-	time.AfterFunc(6 * time.Second, func() {
+	time.AfterFunc(6*time.Second, func() {
 		cancelFun()
 	})
 

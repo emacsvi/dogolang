@@ -7,15 +7,15 @@ import (
 )
 
 type CronJob struct {
-	expr *cronexpr.Expression
+	expr     *cronexpr.Expression
 	nextTime time.Time
 }
 
 func main() {
 	var (
-		expr *cronexpr.Expression
-		now time.Time
-		nextTime time.Time
+		expr          *cronexpr.Expression
+		now           time.Time
+		nextTime      time.Time
 		scheduleTable map[string]*CronJob
 	)
 
@@ -25,21 +25,21 @@ func main() {
 	now = time.Now()
 	nextTime = expr.Next(now)
 	scheduleTable["job1"] = &CronJob{
-		expr:expr,
-		nextTime:nextTime,
+		expr:     expr,
+		nextTime: nextTime,
 	}
 
 	expr = cronexpr.MustParse("*/4 * * * * * *")
 	now = time.Now()
 	nextTime = expr.Next(now)
 	scheduleTable["job2"] = &CronJob{
-		expr:expr,
-		nextTime:nextTime,
+		expr:     expr,
+		nextTime: nextTime,
 	}
 
 	go func() {
 		var (
-			now time.Time
+			now     time.Time
 			jobName string
 			cronJob *CronJob
 		)
@@ -61,7 +61,7 @@ func main() {
 
 			// 睡眠100毫秒
 			select {
-			case <- time.NewTimer(100 * time.Millisecond).C:
+			case <-time.NewTimer(100 * time.Millisecond).C:
 			}
 		}
 
@@ -69,4 +69,3 @@ func main() {
 
 	time.Sleep(100 * time.Second)
 }
-

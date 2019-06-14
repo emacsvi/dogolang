@@ -8,11 +8,11 @@ import (
 
 func main() {
 	var (
-		expr *cronexpr.Expression
-		err error
-		now time.Time
+		expr     *cronexpr.Expression
+		err      error
+		now      time.Time
 		nextTime time.Time
-		t *time.Timer
+		t        *time.Timer
 	)
 	// cron 表达式
 	if expr, err = cronexpr.Parse("*/5 * * * * * *"); err != nil {
@@ -23,9 +23,9 @@ func main() {
 	now = time.Now()
 	nextTime = expr.Next(now)
 	/*
-	time.AfterFunc(nextTime.Sub(now), func() {
-		fmt.Println("被调度了。")
-	})
+		time.AfterFunc(nextTime.Sub(now), func() {
+			fmt.Println("被调度了。")
+		})
 	*/
 	t = time.NewTimer(nextTime.Sub(now))
 

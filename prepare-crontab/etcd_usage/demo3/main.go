@@ -10,17 +10,17 @@ import (
 
 func main() {
 	var (
-		cfg clientv3.Config
-		cli *clientv3.Client
-		err error
-		kv clientv3.KV
+		cfg     clientv3.Config
+		cli     *clientv3.Client
+		err     error
+		kv      clientv3.KV
 		getResp *clientv3.GetResponse
-		kvPair *mvccpb.KeyValue
+		kvPair  *mvccpb.KeyValue
 		delResp *clientv3.DeleteResponse
 	)
 
 	cfg = clientv3.Config{
-		Endpoints:[]string{"127.0.0.1:2379"},
+		Endpoints:   []string{"127.0.0.1:2379"},
 		DialTimeout: 5 * time.Second,
 	}
 

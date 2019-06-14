@@ -9,15 +9,15 @@ import (
 
 func main() {
 	var (
-		cfg clientv3.Config
-		client *clientv3.Client
-		err error
-		kv clientv3.KV
+		cfg     clientv3.Config
+		client  *clientv3.Client
+		err     error
+		kv      clientv3.KV
 		putResp *clientv3.PutResponse
 	)
 
 	cfg = clientv3.Config{
-		Endpoints:[]string{"127.0.0.1:2379"},
+		Endpoints:   []string{"127.0.0.1:2379"},
 		DialTimeout: 5 * time.Second,
 	}
 
@@ -29,7 +29,7 @@ func main() {
 
 	kv = clientv3.NewKV(client)
 
-	if putResp, err = kv.Put(context.TODO(), "/cron/jobs/job1", "bye", clientv3.WithPrevKV()); err != nil {
+	if putResp, err = kv.Put(context.TODO(), "/cron/jobs/job1", "byeBye", clientv3.WithPrevKV()); err != nil {
 		panic(err)
 	} else {
 		fmt.Println("Revision:", putResp.Header.Revision)

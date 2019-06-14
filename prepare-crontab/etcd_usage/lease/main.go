@@ -9,22 +9,22 @@ import (
 
 func main() {
 	var (
-		cfg clientv3.Config
-		cli *clientv3.Client
-		err error
-		lease clientv3.Lease
+		cfg       clientv3.Config
+		cli       *clientv3.Client
+		err       error
+		lease     clientv3.Lease
 		leaseResp *clientv3.LeaseGrantResponse
-		leaseId clientv3.LeaseID
-		kv clientv3.KV
-		putResp *clientv3.PutResponse
-		getResp *clientv3.GetResponse
+		leaseId   clientv3.LeaseID
+		kv        clientv3.KV
+		putResp   *clientv3.PutResponse
+		getResp   *clientv3.GetResponse
 		// 续约用
-		keepAliveResp *clientv3.LeaseKeepAliveResponse
+		keepAliveResp     *clientv3.LeaseKeepAliveResponse
 		keepAliveRespChan <-chan *clientv3.LeaseKeepAliveResponse
 	)
 
 	cfg = clientv3.Config{
-		Endpoints:[]string{"127.0.0.1:2379"},
+		Endpoints:   []string{"127.0.0.1:2379"},
 		DialTimeout: 5 * time.Second,
 	}
 
@@ -51,7 +51,7 @@ func main() {
 	go func() {
 		for {
 			select {
-			case keepAliveResp = <- keepAliveRespChan:
+			case keepAliveResp = <-keepAliveRespChan:
 				if keepAliveRespChan == nil {
 					fmt.Println("租约已经失效了。")
 					goto END
@@ -61,7 +61,7 @@ func main() {
 				}
 			}
 		}
-		END:
+	END:
 	}()
 
 	kv = clientv3.KV(cli)
@@ -71,7 +71,6 @@ func main() {
 	}
 
 	fmt.Println("写入成功：", putResp.Header.Revision)
-
 
 	// 定时的看一下key过期了没有
 	for {

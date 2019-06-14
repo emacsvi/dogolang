@@ -1,0 +1,16 @@
+{
+  "api端口号":"用于请求的api服务",
+  "apiPort": 8070,
+
+  "api读请求超时":"单位是毫秒",
+  "apiReadTimeOut":5000,
+
+  "api写请求超时":"单位是毫秒",
+  "apiWriteTimeOut":5000,
+
+  "ETCD集群地址":"所有可以连接的数组",
+  "etcdEndPoints":["127.0.0.1:2379"],
+
+  "ETCD连接超时时间":"单位毫秒",
+  "etcdDialTimeOut": 5000
+}

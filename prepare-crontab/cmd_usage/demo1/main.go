@@ -7,9 +7,9 @@ import (
 
 func main() {
 	var (
-		cmd *exec.Cmd
+		cmd    *exec.Cmd
 		output []byte
-		err error
+		err    error
 	)
 
 	cmd = exec.Command("bash", "-c", "sleep 5; ls -l")

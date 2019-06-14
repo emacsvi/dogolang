@@ -15,25 +15,24 @@ func main() {
 	// txn事务：if else then
 
 	var (
-		cfg clientv3.Config
-		cli *clientv3.Client
-		err error
-		lease clientv3.Lease
-		leaseResp *clientv3.LeaseGrantResponse
-		leaseId clientv3.LeaseID
-		ctx context.Context
-		cancelFunc context.CancelFunc
-		kv clientv3.KV
+		cfg                clientv3.Config
+		cli                *clientv3.Client
+		err                error
+		lease              clientv3.Lease
+		leaseResp          *clientv3.LeaseGrantResponse
+		leaseId            clientv3.LeaseID
+		ctx                context.Context
+		cancelFunc         context.CancelFunc
+		kv                 clientv3.KV
 		leaseKeepAliveChan <-chan *clientv3.LeaseKeepAliveResponse
 		leaseKeepAliveResp *clientv3.LeaseKeepAliveResponse
-		txn clientv3.Txn
-		txnResp *clientv3.TxnResponse
+		txn                clientv3.Txn
+		txnResp            *clientv3.TxnResponse
 	)
-
 
 	// 1, 上锁(创建租约，自动续租，拿着租约去抢占一个key）
 	cfg = clientv3.Config{
-		Endpoints:[]string{"127.0.0.1:2379"},
+		Endpoints:   []string{"127.0.0.1:2379"},
 		DialTimeout: 5 * time.Second,
 	}
 
@@ -45,8 +44,6 @@ func main() {
 	defer cli.Close()
 
 	lease = clientv3.NewLease(cli)
-
-
 
 	if leaseResp, err = lease.Grant(context.TODO(), 5); err != nil {
 		fmt.Println(err)
@@ -73,7 +70,7 @@ func main() {
 	go func() {
 		for {
 			select {
-			case leaseKeepAliveResp = <- leaseKeepAliveChan:
+			case leaseKeepAliveResp = <-leaseKeepAliveChan:
 				if leaseKeepAliveChan == nil {
 					fmt.Println("租约已经失效了")
 					goto END
@@ -82,22 +79,22 @@ func main() {
 				}
 			}
 		}
-		END:
+	END:
 	}()
 
 	// 拿着租约去抢占一个key
 	kv = clientv3.NewKV(cli)
 	txn = kv.Txn(context.TODO())
-	txn.If(clientv3.Compare(clientv3.CreateRevision(key), "=", 0)).
-		Then(clientv3.OpPut(key, "xxx", clientv3.WithLease(leaseId))).
-		Else(clientv3.OpGet(key))
+	txn.If(clientv3.Compare(clientv3.CreateRevision(key), "=", 0)). // 抢锁条件
+									Then(clientv3.OpPut(key, "xxx", clientv3.WithLease(leaseId))). // 抢锁成功
+									Else(clientv3.OpGet(key))                                      // 抢锁失败的话 获取一下值
 
 	if txnResp, err = txn.Commit(); err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	if !txnResp.Succeeded {
+	if !txnResp.Succeeded { // 判断是否成功抢到锁
 		fmt.Println("抢锁失败")
 		fmt.Println("当前值是：", string(txnResp.Responses[0].GetResponseRange().Kvs[0].Value))
 		return
