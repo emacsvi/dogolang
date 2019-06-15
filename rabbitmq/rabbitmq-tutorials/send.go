@@ -44,10 +44,10 @@ func main() {
 	// immediate: 当immediate标志位设置为true时，如果exchange在将消息路由到queue(s)时发现对于的queue上么有消费者，那么这条消息不会放入队列中。当与消息routeKey关联的所有queue（一个或者多个）都没有消费者时，该消息会通过basic.return方法返还给生产者。
 	// 概括来说，mandatory标志告诉服务器至少将该消息route到一个队列中，否则将消息返还给生产者；immediate标志告诉服务器如果该消息关联的queue上有消费者，则马上将消息投递给它，如果所有queue都没有消费者，直接把消息返还给生产者，不用将消息入队列等待消费者了。
 	err = ch.Publish(
-		"", // exchange: 这里交换机为空，则会走默认的一个交换机，而默认的交换机会将消息送给hello的队列
+		"",     // exchange: 这里交换机为空，则会走默认的一个交换机，而默认的交换机会将消息送给hello的队列
 		q.Name, // routing key
-		false, // mandatory
-		false, // immediate
+		false,  // mandatory
+		false,  // immediate
 		amqp.Publishing{
 			ContentType: "text/plain",
 			Body:        []byte(body),
