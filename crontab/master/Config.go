@@ -6,11 +6,11 @@ import (
 )
 
 type Config struct {
-	ApiPort int `json:"apiPort"`
-	ApiReadTimeOut int `json:"apiReadTimeOut"`
-	ApiWriteTimeOut int `json:"apiWriteTimeOut"`	
-	EtcdEndPoints []string `json:"etcdEndPoints"`
-	EtcdDialTimeOut int `json:"etcdDialTimeOut"`
+	ApiPort         int      `json:"apiPort"`
+	ApiReadTimeOut  int      `json:"apiReadTimeOut"`
+	ApiWriteTimeOut int      `json:"apiWriteTimeOut"`
+	EtcdEndPoints   []string `json:"etcdEndPoints"`
+	EtcdDialTimeOut int      `json:"etcdDialTimeOut"`
 }
 
 var (
@@ -20,7 +20,7 @@ var (
 func InitConfig(filename string) (err error) {
 	var (
 		content []byte
-		config Config
+		config  Config
 	)
 
 	if content, err = ioutil.ReadFile(filename); err != nil {

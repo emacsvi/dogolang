@@ -12,8 +12,8 @@ import (
 // etcd 管理job的接口
 type JobMgr struct {
 	client *clientv3.Client
-	kv clientv3.KV
-	lease clientv3.Lease
+	kv     clientv3.KV
+	lease  clientv3.Lease
 }
 
 var (
@@ -24,11 +24,11 @@ func InitJobMgr() (err error) {
 	var (
 		config clientv3.Config
 		client *clientv3.Client
-		kv clientv3.KV
-		lease clientv3.Lease
+		kv     clientv3.KV
+		lease  clientv3.Lease
 	)
 	config = clientv3.Config{
-		Endpoints: G_config.EtcdEndPoints,
+		Endpoints:   G_config.EtcdEndPoints,
 		DialTimeout: time.Duration(G_config.EtcdDialTimeOut) * time.Millisecond,
 	}
 	if client, err = clientv3.New(config); err != nil {
@@ -40,9 +40,9 @@ func InitJobMgr() (err error) {
 	lease = clientv3.NewLease(client)
 
 	G_jobMgr = &JobMgr{
-		client:client,
-		kv:kv,
-		lease:lease,
+		client: client,
+		kv:     kv,
+		lease:  lease,
 	}
 
 	G_jobMgr.kv.Put(context.TODO(), "/dada", "sorry")
@@ -52,10 +52,10 @@ func InitJobMgr() (err error) {
 func (jobMgr *JobMgr) SaveJob(job *common.Job) (oldJob *common.Job, err error) {
 	// 将内容序列化
 	var (
-		value []byte
-		key string
+		value   []byte
+		key     string
 		putResp *clientv3.PutResponse
-		old common.Job
+		old     common.Job
 	)
 	if value, err = json.Marshal(job); err != nil {
 		return

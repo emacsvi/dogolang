@@ -8,7 +8,7 @@ import (
 	"io"
 	"io/ioutil"
 	"math/rand"
-		"os"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -26,12 +26,12 @@ func init() {
 func main() {
 	flag.Parse()
 	/*
-	if path == "" {
-		path = "."
-	}
-	fmt.Println(path)
-	// go语言平时常用的一些代码。不积跬步，无以至千里
-	getListPath(path)
+		if path == "" {
+			path = "."
+		}
+		fmt.Println(path)
+		// go语言平时常用的一些代码。不积跬步，无以至千里
+		getListPath(path)
 	*/
 	// strConvNumber()
 	// ParseFormatTime()
@@ -43,11 +43,11 @@ func main() {
 // 遍历目录
 func getListPath(root string) (result []string) {
 	var (
-		f func(string, os.FileInfo, error) error
-		ok bool // 判断过滤用的
+		f    func(string, os.FileInfo, error) error
+		ok   bool   // 判断过滤用的
 		name string // 打印用的
 	)
-	f = func (p string, f os.FileInfo, err error) error {
+	f = func(p string, f os.FileInfo, err error) error {
 		// p == path
 		// Walk函数在遍历文件时调用。调用时将参数传递给path，这是一个绝对路径，也就是Walk函数中的root作为前缀。
 		// 将root + 文件名作为path传递给WalkFunc函数。
@@ -96,10 +96,10 @@ func TimerT() {
 
 func strConvNumber() {
 	var (
-		myInt int
-		str string
+		myInt   int
+		str     string
 		myInt64 int64
-		err error
+		err     error
 	)
 	// string 转 int
 	str = "999"
@@ -215,7 +215,7 @@ func RandNumber() {
 	// func (r *Rand) Seed(seed int64)
 	var (
 		mySource rand.Source
-		myRand *rand.Rand
+		myRand   *rand.Rand
 	)
 	mySource = rand.NewSource(time.Now().Unix() + 100)
 	myRand = rand.New(mySource)
@@ -228,6 +228,7 @@ const (
 	letterIdxMask = 1<<letterIdxBits - 1 // All 1-bits, as many as letterIdxBits
 	letterIdxMax  = 63 / letterIdxBits   // # of letter indices fitting in 63 bits
 )
+
 func RandStringBytesMaskImpr(n int) string {
 	b := make([]byte, n)
 	// A rand.Int63() generates 63 random bits, enough for letterIdxMax letters!

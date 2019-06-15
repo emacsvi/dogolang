@@ -22,11 +22,11 @@ var (
 // POST job={"name":"job1", "command":"echo hello", "cronExpr":"5 * * * * * *"}
 func handleJobSave(resp http.ResponseWriter, req *http.Request) {
 	var (
-		err error
+		err     error
 		content string
-		job common.Job
-		old *common.Job
-		value []byte
+		job     common.Job
+		old     *common.Job
+		value   []byte
 	)
 
 	// 解析表单
@@ -57,16 +57,16 @@ func handleJobSave(resp http.ResponseWriter, req *http.Request) {
 	resp.Write(value)
 	return
 
-	ERR:
+ERR:
 	// 失败返回
-		value, _ = common.BuildResponseMsg(-1, err.Error(), nil)
-		resp.Write(value)
+	value, _ = common.BuildResponseMsg(-1, err.Error(), nil)
+	resp.Write(value)
 }
 
 func InitApiServer() (err error) {
 	var (
-		mux *http.ServeMux
-		listen net.Listener
+		mux       *http.ServeMux
+		listen    net.Listener
 		httpServe *http.Server
 	)
 	mux = http.NewServeMux()
@@ -78,12 +78,12 @@ func InitApiServer() (err error) {
 
 	httpServe = &http.Server{
 		ReadHeaderTimeout: time.Duration(G_config.ApiReadTimeOut) * time.Millisecond,
-		WriteTimeout: time.Duration(G_config.ApiWriteTimeOut) * time.Millisecond,
-		Handler:mux,
+		WriteTimeout:      time.Duration(G_config.ApiWriteTimeOut) * time.Millisecond,
+		Handler:           mux,
 	}
 
 	G_apiServer = &ApiServer{
-		httpServer:httpServe,
+		httpServer: httpServe,
 	}
 
 	go G_apiServer.httpServer.Serve(listen)

@@ -37,7 +37,7 @@ func main() {
 		goto ERR
 	}
 	return
-	job = common.Job{Name:"/dada", Command:"echo dada", CronExpr:"xxxx"}
+	job = common.Job{Name: "/dada", Command: "echo dada", CronExpr: "xxxx"}
 	master.G_jobMgr.SaveJob(&job)
 	return
 
@@ -46,12 +46,10 @@ func main() {
 	}
 
 	// 正常退出
-	select {
-
-	}
+	select {}
 	return
 
 	// 异常处理
-	ERR:
-		fmt.Println(err)
+ERR:
+	fmt.Println(err)
 }
